@@ -30,7 +30,7 @@ public class EVCar extends Car{
 
 Car car = new Car();
 car.addFuel()//works
-Car car = new RaceCar();
+Car car = new EVCar();
 car.addFuel()//doesnot work as it is unimplemented as adding fuel in ev car doesnot make sense
 
 
