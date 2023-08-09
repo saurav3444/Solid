@@ -1,0 +1,42 @@
+
+/*
+* Open for extension:
+*   A software component should be extendable to add new feature to it
+* Closed for modification:
+*   New feature added to code should NOT have to modify the existing code
+*
+* Allows:
+*   Ease of adding new feature
+*   leads to minimal testing
+*   OCP requires decoupling which automatically follows SRP
+*
+* */
+
+A Health insurance company acquired a vehicle insurance company
+this will change calculatePremiumDiscountCalculator as Health and vehicle will have different
+calculations for this.
+
+*********BAD DESIGN*************************
+
+public class InsurancePremiumDiscountCalculator {
+
+    public int calculatePremiumDiscountCalculator(HealthInsuranceCustomerProfile customer){
+
+        if(customer.isLoyal()){
+            return 20;
+        }
+        return 0;
+    }
+    public int calculatePremiumDiscountCalculator(VehicleInsuranceCustomerProfile customer){
+
+            if(customer.isLoyal()){
+                return 20;
+            }
+            return 0;
+    }
+
+    //same for Home insurance
+}
+
+here we are doing modification for each changes in our code which is against ocp.
+check code for right approach to solve this problem using ocp.

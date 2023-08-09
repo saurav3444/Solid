@@ -1,0 +1,89 @@
+LSP:
+
+Objects should be replaceable with their subtypes without affecting the correctness of program.
+
+EV, Fuel should be replaceable with Vehicle Object w/o affecting the correctness of program.
+
+
+1) We need to move away from Is-A relationship
+eg1: If we have a duck which quacks, swims but needs a battery, then we need change in our abstraction
+eg2:
+public class Car{
+
+    public double addFuel(){
+        //add impl
+        return 100;
+    }
+}
+
+public class EVCar extends Car{
+
+    @Override
+    public double addFuel(){
+        //unimplemented
+    }
+    public double rechargeBattery(){
+        //add impl
+        return 50;
+    }
+}
+
+Car car = new Car();
+car.addFuel()//works
+Car car = new RaceCar();
+car.addFuel()//doesnot work as it is unimplemented as adding fuel in ev car doesnot make sense
+
+
+refer Vehicle code now we can call car.addEnergy() on any type of vehicle and hence LSP is acheived
+
+2) Tell Don't Ask
+*********BAD DESIGN********************
+public class Product{
+
+    public double applyDiscount(){
+        return discount;
+    }
+}
+
+public class InHouseProduct extends product{
+
+    public double applyExtraDiscount(){
+        return 1.5*discount;
+    }
+}
+
+Product product = new Product();
+product.applyDiscount(); // works
+
+// Here we are asking and not telling
+Product product = new InhouseProduct();
+if(product is InstanceOf(InhouseProduct)){
+    return product.applyExtraDiscount();
+}
+
+************GOOD DESIGN**********************
+
+public class Product{
+
+    public double applyDiscount(){
+        return discount;
+    }
+}
+
+public class InHouseProduct extends product{
+
+    @Override
+    public double applyDiscount(){
+        return this.applyExtraDiscount();
+    }
+    public double applyExtraDiscount(){
+        return 1.5*discount;
+    }
+}
+
+Product product = new Product();
+product.applyDiscount(); // works
+
+// Here we are asking and not telling
+Product product = new InhouseProduct();
+product.applyDiscount(); // works

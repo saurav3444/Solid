@@ -1,0 +1,57 @@
+DI : Dependency Inversion Principle
+
+1.High level modules should not depend on low level modules instead both should depend on Abstraction
+
+2.Abstraction should not depend on details but details should depend on Abstraction
+
+**************BAD DESIGN******************
+
+ProductCatalog ---Depends on--> SqlRepository
+
+ProductCatalog{
+
+    getAllProducts(){
+        SqlRepository repository = new SqlRepository();
+        repository.getAllProducts();
+    }
+}
+**************************************************
+
+ProductCatalog ---Depends on--> ProductRepository <----Depends on-----SqlRepository implements ProductRepo
+
+
+ProductCatalog{
+
+    getAllProducts(){
+        ProductRepository repository = Factory.create();
+        repository.getAllProductNames();
+    }
+}
+*************************Even Better*********************************
+Lets use Dependency injection to avoid instantiation in ProductCatalog class
+
+ProductCatalog{
+    ProductRepository repository;
+
+    ProductCatalog(ProductRepository repository){
+        this.repository = repository;
+    }
+
+    getAllProducts(){
+        repository.getAllProductNames();
+    }
+}
+
+MainClass{
+
+    main(){
+
+        //Here dependency Injection is done by us
+        //When spring does it, its called IOC, using spring factory
+        ProductRepository repository = Factory.create();
+        ProductCatalog pc = new ProductCatalog(repository);
+        pc.getAllProducts();
+
+    }
+
+}

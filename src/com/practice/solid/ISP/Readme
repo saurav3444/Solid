@@ -1,0 +1,47 @@
+ISP:
+    No client should be forced to depend on methods it does not use
+
+violations:
+Fat interface
+Blank methods
+Low cohesion between interface methods
+
+Example:
+
+public interface MultiFunction{
+
+    public void print();
+    public void printDetails();
+    public void fax();
+    public void faxDetails();
+
+}
+public class MultiPurposeMachine implements MultiFunction{
+    public void print(){}
+    public void printDetails(){}
+    public void fax(){}
+    public void faxDetails(){}
+}
+public class xeroxMachine implements MultiFunction{
+    public void print(){}
+    public void printDetails(){}
+    public void fax(){//un implemented}
+    public void faxDetails(){un implemented}
+}
+
+public class FaxMachine implements MultiFunction{
+    public void print(){}
+    public void printDetails(){}
+    public void fax(){//un implemented}
+    public void faxDetails(){ // un implemented}
+}
+
+Here we can see we have blank methods
+
+to avoid this we can segregate MultiFunction into xerox and fax interface
+
+now we can write
+
+public class MultiPurposeMachine implements Fax, Xerox, Scan{
+
+}
